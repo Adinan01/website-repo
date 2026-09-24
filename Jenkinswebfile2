@@ -1,0 +1,24 @@
+pipeline{
+    agent any
+    stages{
+        stage('checkout'){
+            steps{
+                echo "checkout started"
+                deleteDir()
+                sh '''
+                git clone https://github.com/Adinan01/website-repo.git
+                ls -l
+                '''
+            }
+        }
+        stage('deploy'){
+            steps{
+                echo "deployment started"
+                sh '''
+                rm -rf /var/www/html/*
+                cp -r website-repo/* /var/www/html
+                '''
+            }
+        }
+    }
+}
